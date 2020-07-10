@@ -80,66 +80,86 @@ void HAL_MspInit(void)
 }
 
 /**
-* @brief PCD MSP Initialization
+* @brief MMC MSP Initialization
 * This function configures the hardware resources used in this example
-* @param hpcd: PCD handle pointer
+* @param hmmc: MMC handle pointer
 * @retval None
 */
-void HAL_PCD_MspInit(PCD_HandleTypeDef* hpcd)
+void HAL_MMC_MspInit(MMC_HandleTypeDef* hmmc)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-  if(hpcd->Instance==USB_OTG_FS)
+  if(hmmc->Instance==SDIO)
   {
-  /* USER CODE BEGIN USB_OTG_FS_MspInit 0 */
+  /* USER CODE BEGIN SDIO_MspInit 0 */
 
-  /* USER CODE END USB_OTG_FS_MspInit 0 */
+  /* USER CODE END SDIO_MspInit 0 */
+    /* Peripheral clock enable */
+    __HAL_RCC_SDIO_CLK_ENABLE();
   
-    __HAL_RCC_GPIOA_CLK_ENABLE();
-    /**USB_OTG_FS GPIO Configuration    
-    PA12     ------> USB_OTG_FS_DP
-    PA11     ------> USB_OTG_FS_DM 
+    __HAL_RCC_GPIOC_CLK_ENABLE();
+    __HAL_RCC_GPIOD_CLK_ENABLE();
+    /**SDIO GPIO Configuration    
+    PC12     ------> SDIO_CK
+    PC11     ------> SDIO_D3
+    PC10     ------> SDIO_D2
+    PD2     ------> SDIO_CMD
+    PC9     ------> SDIO_D1
+    PC8     ------> SDIO_D0 
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_11;
+    GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_11|GPIO_PIN_10|GPIO_PIN_9 
+                          |GPIO_PIN_8;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    GPIO_InitStruct.Alternate = GPIO_AF10_OTG_FS;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+    GPIO_InitStruct.Alternate = GPIO_AF12_SDIO;
+    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-    /* Peripheral clock enable */
-    __HAL_RCC_USB_OTG_FS_CLK_ENABLE();
-  /* USER CODE BEGIN USB_OTG_FS_MspInit 1 */
+    GPIO_InitStruct.Pin = GPIO_PIN_2;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    GPIO_InitStruct.Alternate = GPIO_AF12_SDIO;
+    HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
-  /* USER CODE END USB_OTG_FS_MspInit 1 */
+  /* USER CODE BEGIN SDIO_MspInit 1 */
+
+  /* USER CODE END SDIO_MspInit 1 */
   }
 
 }
 
 /**
-* @brief PCD MSP De-Initialization
+* @brief MMC MSP De-Initialization
 * This function freeze the hardware resources used in this example
-* @param hpcd: PCD handle pointer
+* @param hmmc: MMC handle pointer
 * @retval None
 */
-void HAL_PCD_MspDeInit(PCD_HandleTypeDef* hpcd)
+void HAL_MMC_MspDeInit(MMC_HandleTypeDef* hmmc)
 {
-  if(hpcd->Instance==USB_OTG_FS)
+  if(hmmc->Instance==SDIO)
   {
-  /* USER CODE BEGIN USB_OTG_FS_MspDeInit 0 */
+  /* USER CODE BEGIN SDIO_MspDeInit 0 */
 
-  /* USER CODE END USB_OTG_FS_MspDeInit 0 */
+  /* USER CODE END SDIO_MspDeInit 0 */
     /* Peripheral clock disable */
-    __HAL_RCC_USB_OTG_FS_CLK_DISABLE();
+    __HAL_RCC_SDIO_CLK_DISABLE();
   
-    /**USB_OTG_FS GPIO Configuration    
-    PA12     ------> USB_OTG_FS_DP
-    PA11     ------> USB_OTG_FS_DM 
+    /**SDIO GPIO Configuration    
+    PC12     ------> SDIO_CK
+    PC11     ------> SDIO_D3
+    PC10     ------> SDIO_D2
+    PD2     ------> SDIO_CMD
+    PC9     ------> SDIO_D1
+    PC8     ------> SDIO_D0 
     */
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_12|GPIO_PIN_11);
+    HAL_GPIO_DeInit(GPIOC, GPIO_PIN_12|GPIO_PIN_11|GPIO_PIN_10|GPIO_PIN_9 
+                          |GPIO_PIN_8);
 
-  /* USER CODE BEGIN USB_OTG_FS_MspDeInit 1 */
+    HAL_GPIO_DeInit(GPIOD, GPIO_PIN_2);
 
-  /* USER CODE END USB_OTG_FS_MspDeInit 1 */
+  /* USER CODE BEGIN SDIO_MspDeInit 1 */
+
+  /* USER CODE END SDIO_MspDeInit 1 */
   }
 
 }
