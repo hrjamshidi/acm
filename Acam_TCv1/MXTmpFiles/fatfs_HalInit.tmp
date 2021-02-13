@@ -1,4 +1,0 @@
-#t/*## FatFS: Link the SD driver ###########################*/
-#tretSD = FATFS_LinkDriver(&SD_Driver, SDPath);
-#t/*## FatFS: Link the USBH driver ###########################*/
-#tretUSBH = FATFS_LinkDriver(&USBH_Driver, USBHPath);

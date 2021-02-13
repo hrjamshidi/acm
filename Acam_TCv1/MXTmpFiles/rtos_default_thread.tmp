@@ -9,6 +9,8 @@
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void *argument)
 {
+#t/* init code for LWIP */
+#tMX_LWIP_Init();#n
 #t/* init code for USB_DEVICE */
 #tMX_USB_DEVICE_Init();#n
 #t/* init code for USB_HOST */
